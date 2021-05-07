@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add a car</title>
+  </head>
+  <body>
+<a href="{% url 'api:index' %}">HOME</a>
+<a href="{% url 'api:search' %}">Search</a>
+<br>Welcome,
+      <h3>Add a car</h3>
+      <form method="POST">
+        {{ form.as_p }}
+        {%csrf_token%}
+        <input type="submit" name="adding" value="Add" style="height:50px; width:50px">
+
+      </form>
+      <h3>Delete a Car</h3>
+<form method="post">
+  {{ delform.as_p }}
+  {%csrf_token%}
+  <input type="submit" name="deleting" value="Delete" style="height:50px; width:50px">
+</form>
+{% if errormsg == 100 %}
+<h3>Slots are full</h3>
+{% elif msg == 100 %}
+<h3>Car Added</h3>
+{% elif msg == 101 %}
+<h3>Car is Deallocated(Slot Vacant)</h3>
+{% elif errormsg == 101 %}
+<h3>Error while Deleting (No Car Found)</h3>
+
+
+{%endif%}
+
+
+
+      <h3 align="center"><br>Current Status of Slots</h3>
+      {% if carvalin %}
+      <table border=1px title= "Last Input">
+        <th>Reg No.</th>
+        <th>Color </th>
+        <th>Status</th>
+        <th>Slot</th>
+        <th>Level</th>
+        <th>Time_in</th>
+        <th>Date_out</th>
+        <th>Charged Price</th>
+
+        {%for carin in carvalin%}
+        <tr><td>{{carin.regno}}</td><td>{{carin.color}}</td><td>{{carin.status}}</td><td>{{carin.slot}}</td><td>{{carin.level}}</td><td>{{carin.Time_in}}</td><td>{{carin.Date_out}}</td><td>{{carin.Charged_price}}</td>
+            </tr>
+
+        {%endfor%}
+      </table>
+      {%else%}
+      <p> No Car Data Found !!</p>
+      {%endif%}
+
+
+
+  </body>
+</html>
